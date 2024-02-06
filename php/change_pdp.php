@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitImage"])) {
   $updateStmt = mysqli_prepare($link, $updateSql);
 
   if ($updateStmt) {
-    mysqli_stmt_bind_param($updateStmt, "si", $fullImagePath, $_SESSION["user_ID"]); // Stockez seulement le nom du fichier
+    mysqli_stmt_bind_param($updateStmt, "si", $fullImagePath, $_SESSION["user_ID"]);
     if (mysqli_stmt_execute($updateStmt)) {
     } else {
       echo "Oops! Quelque chose s'est mal passé. Veuillez réessayer plus tard.";

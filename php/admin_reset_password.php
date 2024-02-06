@@ -52,12 +52,12 @@ require '../vendor/phpmailer/phpmailer/src/PHPMailer.php';
 require '../vendor/phpmailer/phpmailer/src/SMTP.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["csrf_token"])) {
-  // Vérification du token CSRF
+
   if (!isset($_POST["csrf_token"]) || $_POST["csrf_token"] !== $_SESSION["csrf_token"]) {
     die("Erreur de validation CSRF.");
   }
 
-  // Assainissement et validation de l'ID utilisateur
+
   $user_ID = filter_var($_POST["user_ID"], FILTER_SANITIZE_NUMBER_INT);
 
   if (false === filter_var($user_ID, FILTER_VALIDATE_INT)) {
@@ -72,7 +72,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["csrf_token"])) {
     mysqli_stmt_execute($reset_password_stmt);
     mysqli_stmt_close($reset_password_stmt);
 
-    // Envoi de l'email avec PHPMailer
     try {
       $mail = new PHPMailer(true);
       $mail->isSMTP();
@@ -83,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["csrf_token"])) {
       $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
       $mail->Port = 587;
 
-      // Destinataires
+      
       $userEmail = retrieveUserEmail($link, $user_ID);
       if (!$userEmail) {
         throw new Exception("Email de l'utilisateur non trouvé.");

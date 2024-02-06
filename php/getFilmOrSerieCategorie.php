@@ -7,22 +7,21 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
 function getFilmsOrSeriesByCategory($link, $categorie)
 {
-  // Liste des champs valides pour le tri
+
   $validFields = ['title'];
   $validDirections = ['ASC', 'DESC'];
-  $orderBy = "title ASC"; // Valeur par défaut sûre
+  $orderBy = "title ASC"; 
 
   if (isset($_GET['tri'])) {
-    list($field, $direction) = explode('_', $_GET['tri'] . '_'); // Sécurité supplémentaire pour éviter les notices PHP
-    $direction = strtoupper($direction); // Normalisation en majuscules
+    list($field, $direction) = explode('_', $_GET['tri'] . '_'); 
+    $direction = strtoupper($direction); 
 
-    // Validation des entrées
+
     if (in_array($field, $validFields) && in_array($direction, $validDirections)) {
       $orderBy = "$field $direction";
-    } // Sinon, utilise la valeur par défaut
+    } 
   }
 
-  // Construction de la requête SQL sécurisée
   $sql = "SELECT
             film.film_ID,
             film.film_image_path,
@@ -76,7 +75,7 @@ function getFilmsOrSeriesByCategory($link, $categorie)
             serie.serie_ID
           ORDER BY $orderBy";
 
-  // Préparation et exécution de la requête sécurisée
+
   if ($stmt = mysqli_prepare($link, $sql)) {
     mysqli_stmt_bind_param($stmt, "ss", $categorie, $categorie);
     mysqli_stmt_execute($stmt);
@@ -118,14 +117,14 @@ echo '<div class="box box_cat box_' . $lower_categorie . '">';
 
 foreach ($filmsOrSeries as $item) {
   $id = htmlspecialchars($item['type'] === 'film' ? $item['film_ID'] : $item['serie_ID']);
-  $type = htmlspecialchars($item['type']); // Ajout du type (film ou serie)
+  $type = htmlspecialchars($item['type']); 
   $title = htmlspecialchars_decode($item['type'] === 'film' ? $item['title'] : $item['serie_title']);
   $title = str_replace("_", " ", $title);
   $image_path = htmlspecialchars($item['type'] === 'film' ? $item['film_image_path'] : $item['serie_image_path']);
   $synopsis = htmlspecialchars_decode($item['type'] === 'film' ? $item['film_synopsis'] : $item['serie_synopsis']);
-  $duree = htmlspecialchars($item['type'] === 'film' ? $item['film_duree'] : ''); // Durée pour les séries non disponible ici
-  $video_path = htmlspecialchars($item['type'] === 'film' ? $item['film_path'] : ''); // Chemin vidéo pour les séries non disponible ici
-  $miniature = htmlspecialchars($item['type'] === 'film' ? $item['film_miniature_path'] : ''); // Miniature pour les séries non disponible ici
+  $duree = htmlspecialchars($item['type'] === 'film' ? $item['film_duree'] : ''); 
+  $video_path = htmlspecialchars($item['type'] === 'film' ? $item['film_path'] : ''); 
+  $miniature = htmlspecialchars($item['type'] === 'film' ? $item['film_miniature_path'] : ''); 
 
   echo '<div class="box_div">
           <a href="javascript:void(0);" onclick="openModal(this)"

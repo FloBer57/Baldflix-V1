@@ -97,14 +97,14 @@ echo '<div class="box box_cat box_' . "index" . '">';
 
 foreach ($filmsOrSeries as $item) {
   $id = htmlspecialchars($item['type'] === 'film' ? $item['film_ID'] : $item['serie_ID']);
-  $type = htmlspecialchars($item['type']); // Ajout du type (film ou serie)
+  $type = htmlspecialchars($item['type']); 
   $title = htmlspecialchars_decode($item['type'] === 'film' ? $item['title'] : $item['serie_title']);
   $title = str_replace("_", " ", $title);
   $image_path = htmlspecialchars($item['type'] === 'film' ? $item['film_image_path'] : $item['serie_image_path']);
   $synopsis = htmlspecialchars_decode($item['type'] === 'film' ? $item['film_synopsis'] : $item['serie_synopsis']);
-  $duree = htmlspecialchars($item['type'] === 'film' ? $item['film_duree'] : ''); // Durée pour les séries non disponible ici
-  $video_path = htmlspecialchars($item['type'] === 'film' ? $item['film_path'] : ''); // Chemin vidéo pour les séries non disponible ici
-  $miniature = htmlspecialchars($item['type'] === 'film' ? $item['film_miniature_path'] : ''); // Miniature pour les séries non disponible ici
+  $duree = htmlspecialchars($item['type'] === 'film' ? $item['film_duree'] : ''); 
+  $video_path = htmlspecialchars($item['type'] === 'film' ? $item['film_path'] : ''); 
+  $miniature = htmlspecialchars($item['type'] === 'film' ? $item['film_miniature_path'] : ''); 
 
   echo '<div class="box_div">
           <a href="javascript:void(0);" onclick="openModal(this)"

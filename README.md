@@ -94,11 +94,18 @@ https://doc.florentbernar.fr/en/Système/Configuration/Nginx
 
 Pour crée l'utilisateur qui permet de gérer toute la BDD, voici la requête SQL
 
+```sql
+GRANT USAGE ON *.* TO `baldflix_admin`@`%` IDENTIFIED BY PASSWORD '*57014412ECC8E17653C056AF7AB2531E9B47A12A';
+GRANT ALL PRIVILEGES ON `baldflix_db`.* TO `baldflix_admin`@`%`;
 GRANT USAGE ON *.* TO `baldflix_admin`@`%` IDENTIFIED BY PASSWORD '*57014412ECC8E17653C056AF7AB2531E9B47A12A';
 
 GRANT ALL PRIVILEGES ON `baldflix_db`.* TO `baldflix_admin`@`%`;
 
+```
+
 Voici un exemple d'un config.php : 
+
+``` 
 <?php
 
 define('DB_SERVER', 'localhost');
@@ -114,9 +121,9 @@ if($link === false){
     die("ERROR: Could not connect. " . mysqli_connect_error());
 }
 
+```
 ## Gestion des mails 
 
-J'ai laissé dans le projet les configurations du serveur SMTP.
 Voici un lien qui vous explique comment le configurer. 
 
 https://analyse-innovation-solution.fr/publication/fr/php/comment-envoyer-un-mail-en-php
